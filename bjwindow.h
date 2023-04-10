@@ -3,7 +3,7 @@
 #define BJWINDOW_H
 
 #include <QMainWindow>
-
+#include <QGraphicsScene>
 
 
 QT_BEGIN_NAMESPACE
@@ -21,6 +21,7 @@ public:
 
 private:
     Ui::BJWindow *ui;
+    QGraphicsScene *scene;
 };
 
 #endif // BJWINDOW_H
