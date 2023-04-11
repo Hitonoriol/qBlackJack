@@ -2,7 +2,9 @@
 #include "ui_bjwindow.h"
 
 #include "resources.h"
-#include "card.h"
+
+#include "deck.h"
+#include "hand.h"
 
 BJWindow::BJWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -13,15 +15,18 @@ BJWindow::BJWindow(QWidget *parent)
     ui->setupUi(this);
     ui->gameView->setScene(scene);
 
-    /* Test cards */
-    auto cardA = new Card(Card::Suit::HEARTS, Card::Value::TEN);
-    auto cardB = new Card(Card::Suit::SPADES, Card::Value::ACE);
+    /* Test `Deck` and `Hand` abstractions */
+    Deck deck;
+    auto handA = new Hand, handB = new Hand;
 
-    scene->addItem(cardA);
-    scene->addItem(cardB);
+    handA->draw(deck, 3);
+    handB->draw(deck, 2);
+    handA->lastCard().hide();
 
-    cardA->setPos(0, 0);
-    cardB->setPos(100, 0);
+    handB->setY(-Resources::cardSheet->getRegionHeight());
+
+    scene->addItem(handA);
+    scene->addItem(handB);
 }
 
 BJWindow::~BJWindow()

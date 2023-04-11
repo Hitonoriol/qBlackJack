@@ -12,6 +12,8 @@ RESOURCES = resources.qrc
 
 SOURCES += \
     card.cpp \
+    deck.cpp \
+    hand.cpp \
     main.cpp \
     bjwindow.cpp \
     resources.cpp \
@@ -20,6 +22,8 @@ SOURCES += \
 HEADERS += \
     bjwindow.h \
     card.h \
+    deck.h \
+    hand.h \
     resources.h \
     spritesheet.h
 
