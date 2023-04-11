@@ -34,8 +34,18 @@ void SpriteSheet::paintRegion(
 QRectF SpriteSheet::boundingRect() const
 {
     return {
-        -static_cast<int64_t>(regionWidth) / 2,
-        -static_cast<int64_t>(regionHeight) / 2,
+        -regionWidth / 2,
+        -regionHeight / 2,
         regionWidth, regionHeight
     };
+}
+
+double SpriteSheet::getRegionWidth()
+{
+    return regionWidth;
+}
+
+double SpriteSheet::getRegionHeight()
+{
+    return regionHeight;
 }

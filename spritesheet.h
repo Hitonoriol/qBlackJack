@@ -9,7 +9,7 @@ class SpriteSheet
 {
 private:
     size_t hRegions, vRegions;
-    size_t regionWidth, regionHeight;
+    double regionWidth, regionHeight;
     QPixmap texture;
 
 public:
@@ -21,6 +21,9 @@ public:
         size_t regionX, size_t regionY = 1
     );
     QRectF boundingRect() const;
+
+    double getRegionWidth();
+    double getRegionHeight();
 };
 
 #endif // SPRITESHEET_H
