@@ -22,6 +22,9 @@ public:
     /* Evaluate this hand's score */
     size_t evaluate();
 
+    /* Remove all cards from this hand */
+    void clear();
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
 

@@ -5,6 +5,7 @@ void Hand::draw(Deck &deck, size_t n)
 {
     for (size_t i = 0; i < n; ++i)
         cards.append(deck.nextCard());
+    update();
 }
 
 Card &Hand::lastCard()
@@ -26,6 +27,12 @@ size_t Hand::evaluate()
     return score;
 }
 
+void Hand::clear()
+{
+    cards.clear();
+    update();
+}
+
 void Hand::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     auto x = pos().x();
@@ -40,6 +47,6 @@ QRectF Hand::boundingRect() const
 {
     double width = cards.size() * Resources::cardSheet->getRegionWidth();
     double height = Resources::cardSheet->getRegionHeight();
-    return {-width / 2, -height / 2, width, height};
+    return {0, 0, width, height};
 }
 
