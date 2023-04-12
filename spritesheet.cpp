@@ -19,9 +19,6 @@ void SpriteSheet::paintRegion(
     size_t regionX, size_t regionY
 )
 {
-    qDebug() << "Drawing region @"
-             << regionX << "," << regionY
-             << "(" << (regionX * regionWidth) << "," << (regionY * regionHeight) << ")";
     painter->drawPixmap(
         screenCoords.x(),
         screenCoords.y(),
