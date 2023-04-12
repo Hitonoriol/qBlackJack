@@ -11,24 +11,34 @@ RESOURCES = resources.qrc
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    betcontrols.cpp \
+    blackjack.cpp \
     card.cpp \
     deck.cpp \
+    gamecontrols.cpp \
     hand.cpp \
     main.cpp \
     bjwindow.cpp \
     resources.cpp \
+    scene.cpp \
     spritesheet.cpp
 
 HEADERS += \
+    betcontrols.h \
     bjwindow.h \
+    blackjack.h \
     card.h \
     deck.h \
+    gamecontrols.h \
     hand.h \
     resources.h \
+    scene.h \
     spritesheet.h
 
 FORMS += \
-    bjwindow.ui
+    betcontrols.ui \
+    bjwindow.ui \
+    gamecontrols.ui
 
 TRANSLATIONS += \
     bj_en_US.ts

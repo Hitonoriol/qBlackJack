@@ -1,10 +1,11 @@
-
 #ifndef BJWINDOW_H
 #define BJWINDOW_H
 
-#include <QMainWindow>
-#include <QGraphicsScene>
+#include "blackjack.h"
 
+#include "scene.h"
+
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class BJWindow; }
@@ -21,7 +22,8 @@ public:
 
 private:
     Ui::BJWindow *ui;
-    QGraphicsScene *scene;
+    Scene *scene;
+    std::unique_ptr<BlackJack> blackJack;
 };
 
 #endif // BJWINDOW_H
