@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>style/stylesheet.qss</file>
         <file>textures/cards.png</file>
     </qresource>
 </RCC>

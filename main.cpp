@@ -1,5 +1,7 @@
 #include "bjwindow.h"
 
+#include "resources.h"
+
 #include <QApplication>
 
 #include <QLocale>
@@ -8,6 +10,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setStyleSheet(Resources::readFile(":/style/stylesheet.qss"));
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();

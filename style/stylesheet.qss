@@ -1,0 +1,6 @@
+QWidget#HandInfo,
+QWidget#GameInfo,
+QWidget#GameControls,
+QWidget#BetControls {
+	background-color: rgba(0, 0, 0, 0);
+}
