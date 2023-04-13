@@ -34,7 +34,7 @@ size_t Card::getScore()
     if (rank == Rank::ACE)
         return 11u;
 
-    return qMax(10u, toIdx(rank) + 2);
+    return qMin(10u, toIdx(rank) + 2);
 }
 
 Card::Rank Card::getRank()
