@@ -15,8 +15,11 @@ SOURCES += \
     blackjack.cpp \
     card.cpp \
     deck.cpp \
+    dialogs.h \
     gamecontrols.cpp \
+    gameinfo.cpp \
     hand.cpp \
+    handinfo.cpp \
     main.cpp \
     bjwindow.cpp \
     resources.cpp \
@@ -30,7 +33,9 @@ HEADERS += \
     card.h \
     deck.h \
     gamecontrols.h \
+    gameinfo.h \
     hand.h \
+    handinfo.h \
     resources.h \
     scene.h \
     spritesheet.h
@@ -38,7 +43,9 @@ HEADERS += \
 FORMS += \
     betcontrols.ui \
     bjwindow.ui \
-    gamecontrols.ui
+    gamecontrols.ui \
+    gameinfo.ui \
+    handinfo.ui
 
 TRANSLATIONS += \
     bj_en_US.ts
