@@ -1,10 +1,10 @@
 #include "betcontrols.h"
 #include "ui_betcontrols.h"
 
-BetControls::BetControls(BlackJack &blackJack) :
+BetControls::BetControls(BJWindow &game) :
     QWidget(),
     ui(new Ui::BetControls),
-    blackJack(blackJack)
+    game(game)
 {
     ui->setupUi(this);
     ui->betSlider->setMinimum(1);
@@ -19,13 +19,12 @@ BetControls::~BetControls()
 
 void BetControls::balanceUpdated()
 {
-    auto balance = blackJack.getBalance();
+    auto balance = game.getBlackJack().getBalance();
     ui->betSlider->setMaximum(balance);
     ui->betSpinBox->setMaximum(balance);
 }
 
 void BetControls::placeBet()
 {
-    qDebug() << "placeBet()";
-    blackJack.placeBet(ui->betSlider->value());
+    game.startGame(ui->betSlider->value());
 }

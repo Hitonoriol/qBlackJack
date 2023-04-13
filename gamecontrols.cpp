@@ -1,10 +1,10 @@
 #include "gamecontrols.h"
 #include "ui_gamecontrols.h"
 
-GameControls::GameControls(BlackJack &blackJack) :
+GameControls::GameControls(BJWindow &game) :
     QWidget(),
     ui(new Ui::GameControls),
-    blackJack(blackJack)
+    game(game)
 {
     ui->setupUi(this);
 }
@@ -16,10 +16,10 @@ GameControls::~GameControls()
 
 void GameControls::hit()
 {
-    blackJack.hit();
+    game.doHit();
 }
 
 void GameControls::stand()
 {
-    blackJack.stand();
+    game.doStand();
 }

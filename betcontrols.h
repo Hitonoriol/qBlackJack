@@ -1,7 +1,7 @@
 #ifndef BETCONTROLS_H
 #define BETCONTROLS_H
 
-#include "blackjack.h"
+#include "bjwindow.h"
 
 #include <QWidget>
 
@@ -14,7 +14,7 @@ class BetControls : public QWidget
     Q_OBJECT
 
 public:
-    explicit BetControls(BlackJack&);
+    explicit BetControls(BJWindow&);
     ~BetControls();
 
     void balanceUpdated();
@@ -24,7 +24,7 @@ private slots:
 
 private:
     Ui::BetControls *ui;
-    BlackJack &blackJack;
+    BJWindow &game;
 };
 
 #endif // BETCONTROLS_H
