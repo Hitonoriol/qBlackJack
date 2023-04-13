@@ -91,6 +91,7 @@ void BlackJack::startGame()
     player->draw(deck);
     dealer->draw(deck);
     dealer->lastCard().hide();
+    player->draw(deck);
 
     if (player->evaluate() == BJ) {
         state = GameState::BlackJack;
