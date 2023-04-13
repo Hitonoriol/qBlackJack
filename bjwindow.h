@@ -47,6 +47,8 @@ private:
     static constexpr double LABEL_PADDING = 30;
 
     void gameSceneResized();
+
+    const QString& notify(const QString&);
 };
 
 #endif // BJWINDOW_H

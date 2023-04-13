@@ -17,7 +17,12 @@ public:
     static QString
         balanceString,
         betString,
-        handString;
+        handString,
+
+        bustMsg,
+        winMsg,
+        lossMsg,
+        pushMsg;
 
     static QString readFile(const QString&);
 };

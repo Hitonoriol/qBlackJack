@@ -12,6 +12,7 @@
 #include <QGraphicsProxyWidget>
 #include <QGraphicsLinearLayout>
 #include <QGraphicsWidget>
+#include <QScrollBar>
 
 BJWindow::BJWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -21,6 +22,9 @@ BJWindow::BJWindow(QWidget *parent)
 {
     Resources::load();
     ui->setupUi(this);
+    ui->gameView->verticalScrollBar()->blockSignals(true);
+
+    notify("Place a bet to begin the game.");
 
     betControls = new BetControls(*this);
     gameControls = new GameControls(*this);
@@ -64,6 +68,7 @@ void BJWindow::startGame(int bet)
 
 void BJWindow::gameStarted()
 {
+    notify("Game in progress...");
     betControls->hide();
     gameControls->show();
     gameInfo->infoUpdated();
@@ -107,35 +112,35 @@ void BJWindow::gameEnded()
     case BlackJack::GameState::Bust:
         Dialog::warning(
             "Bust",
-            "You busted and lost $" + QString::number(blackJack->getBet())
+            notify(Resources::bustMsg.arg(blackJack->getBet()))
         );
         break;
 
     case BlackJack::GameState::Loss:
         Dialog::warning(
             "Loss",
-            "You lost $" + QString::number(blackJack->getBet())
+            notify(Resources::lossMsg.arg(blackJack->getBet()))
         );
         break;
 
     case BlackJack::GameState::Push:
         Dialog::info(
             "Push",
-            "Dealer has an equivalent hand. Your bet is refunded."
+            notify(Resources::pushMsg)
         );
         break;
 
     case BlackJack::GameState::BlackJack:
         Dialog::info(
             "BlackJack",
-            "Congratulations! You won $" + QString::number(blackJack->winAmount())
+            notify(Resources::winMsg.arg(blackJack->winAmount()))
         );
         break;
 
     case BlackJack::GameState::Win:
         Dialog::info(
             "Win",
-            "Congratulations! You won $" + QString::number(blackJack->winAmount())
+            notify(Resources::winMsg.arg(blackJack->winAmount()))
         );
         break;
 
@@ -156,6 +161,12 @@ void BJWindow::gameSceneResized()
     scene->setSceneRect(-width / 2, 0, width, height);
     ui->gameView->fitInView(scene->itemsBoundingRect(), Qt::AspectRatioMode::KeepAspectRatio);
     ui->gameView->centerOn(0, 0);
+}
+
+const QString& BJWindow::notify(const QString &message)
+{
+    ui->statusbar->showMessage(message);
+    return message;
 }
 
 
