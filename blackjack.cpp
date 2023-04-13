@@ -28,7 +28,7 @@ void BlackJack::hit()
 
 void BlackJack::stand()
 {
-    dealer->lastCard().show();
+    dealer->lastCard().showFace();
     while (dealer->evaluate() < dealerThreshold)
         dealer->draw(deck);
     checkGameEndConditions();
@@ -90,7 +90,7 @@ void BlackJack::startGame()
     dealer->draw(deck);
     player->draw(deck);
     dealer->draw(deck);
-    dealer->lastCard().hide();
+    dealer->lastCard().hideFace();
     player->draw(deck);
 
     if (player->evaluate() == BJ) {

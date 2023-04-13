@@ -37,7 +37,7 @@ public:
 private:
     Suit suit;
     Rank rank;
-    bool visible = true;
+    bool faceVisible = true;
 
 public:
     Card(Suit, Rank);
@@ -50,11 +50,11 @@ public:
     Suit getSuit();
 
     /* Get this card's visibility state - if it's not visible, the backside is displayed. */
-    bool isVisible();
+    bool isFaceVisible();
 
-    void setVisible(bool);
-    void hide();
-    void show();
+    void setFaceVisible(bool);
+    void hideFace();
+    void showFace();
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     QRectF boundingRect() const override;

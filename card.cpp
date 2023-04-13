@@ -12,8 +12,8 @@ Card::Card(size_t suitIdx, size_t rankIdx)
 
 void Card::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    auto rank_idx = visible ? toIdx(rank) : 0u;
-    auto suit_idx = toIdx(visible ? suit : Suit::HIDDEN);
+    auto rank_idx = faceVisible ? toIdx(rank) : 0u;
+    auto suit_idx = toIdx(faceVisible ? suit : Suit::HIDDEN);
     Resources::cardSheet->paintRegion(
         painter,
         pos(),
@@ -47,23 +47,23 @@ Card::Suit Card::getSuit()
     return suit;
 }
 
-bool Card::isVisible()
+bool Card::isFaceVisible()
 {
-    return visible;
+    return faceVisible;
 }
 
-void Card::setVisible(bool value)
+void Card::setFaceVisible(bool value)
 {
-    visible = value;
+    faceVisible = value;
 }
 
-void Card::hide()
+void Card::hideFace()
 {
-    setVisible(false);
+    setFaceVisible(false);
 }
 
-void Card::show()
+void Card::showFace()
 {
-    setVisible(true);
+    setFaceVisible(true);
 }
 

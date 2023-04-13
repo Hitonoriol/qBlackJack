@@ -20,6 +20,6 @@ HandInfo::~HandInfo()
 void HandInfo::handUpdated()
 {
     ui->infoLabel->setText(Resources::handString.arg(
-        hand.lastCard().isVisible() ? hand.evaluate() : hand.firstCard().getScore()
+        hand.lastCard().isFaceVisible() ? hand.evaluate() : hand.firstCard().getScore()
     ));
 }

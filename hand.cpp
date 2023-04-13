@@ -5,7 +5,7 @@
 Hand::Hand()
 {
     auto emptyCard = std::make_shared<Card>(Card::Suit::CLUBS, Card::Rank::ACE);
-    emptyCard->hide();
+    emptyCard->hideFace();
     cards.append(emptyCard);
 }
 
