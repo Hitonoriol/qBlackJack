@@ -1,5 +1,6 @@
 #include "hand.h"
 #include "resources.h"
+#include "blackjack.h"
 
 void Hand::draw(Deck &deck, size_t n)
 {
@@ -13,17 +14,25 @@ Card &Hand::lastCard()
     return *cards.last();
 }
 
+Card &Hand::firstCard()
+{
+    return *cards.first();
+}
+
 size_t Hand::evaluate()
 {
     size_t score = 0;
+    size_t aces = 0;
     for (auto card : cards) {
         auto worth = card->getScore();
         if (card->getRank() == Card::Rank::ACE) {
-            if (score + worth > BLACKJACK)
-                worth = 1;
+            ++aces;
+            continue;
         }
         score += worth;
     }
+    for (size_t i = 0; i < aces; ++i)
+        score += score + 11 > BlackJack::BJ ? 1 : 11;
     return score;
 }
 
@@ -35,7 +44,7 @@ void Hand::clear()
 
 void Hand::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    auto x = pos().x();
+    auto x = 0;
     for (auto card : cards) {
         card->setX(x);
         card->paint(painter, option, widget);

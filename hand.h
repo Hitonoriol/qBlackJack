@@ -16,8 +16,9 @@ public:
     /* Draw `n` cards from the deck */
     void draw(Deck&, size_t n = 1);
 
-    /* Get a reference to the last card drawn from the deck */
+    /* Get a reference to the first/last card drawn from the deck */
     Card& lastCard();
+    Card& firstCard();
 
     /* Evaluate this hand's score */
     size_t evaluate();
@@ -27,8 +28,6 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
-
-    static constexpr size_t BLACKJACK = 21;
 };
 
 #endif // HAND_H
