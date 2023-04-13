@@ -13,6 +13,8 @@ private:
     QList<std::shared_ptr<Card>> cards;
 
 public:
+    Hand();
+
     /* Draw `n` cards from the deck */
     void draw(Deck&, size_t n = 1);
 

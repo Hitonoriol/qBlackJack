@@ -2,6 +2,13 @@
 #include "resources.h"
 #include "blackjack.h"
 
+Hand::Hand()
+{
+    auto emptyCard = std::make_shared<Card>(Card::Suit::CLUBS, Card::Rank::ACE);
+    emptyCard->hide();
+    cards.append(emptyCard);
+}
+
 void Hand::draw(Deck &deck, size_t n)
 {
     for (size_t i = 0; i < n; ++i)
