@@ -4,13 +4,20 @@
 #include "card.h"
 #include "deck.h"
 
-#include <QGraphicsItem>
+#include <QGraphicsObject>
 #include <QList>
 
-class Hand : public QGraphicsItem
+class Hand : public QGraphicsObject
 {
 private:
+    Q_OBJECT
+
+    static constexpr int DRAW_DELAY = 275;
+
     QList<std::shared_ptr<Card>> cards;
+    int cardsDrawing = 0;
+
+    void add(std::shared_ptr<Card>);
 
 public:
     Hand();

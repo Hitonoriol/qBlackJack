@@ -22,6 +22,7 @@ SOURCES += \
     handinfo.cpp \
     main.cpp \
     bjwindow.cpp \
+    qutil.cpp \
     resources.cpp \
     scene.cpp \
     spritesheet.cpp
@@ -36,6 +37,7 @@ HEADERS += \
     gameinfo.h \
     hand.h \
     handinfo.h \
+    qutil.h \
     resources.h \
     scene.h \
     spritesheet.h

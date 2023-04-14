@@ -3,10 +3,13 @@
 
 #include "spritesheet.h"
 
-#include <QGraphicsItem>
+#include <QGraphicsObject>
+#include <QPointF>
 
-class Card : public QGraphicsItem
+class Card : public QGraphicsObject
 {
+    Q_OBJECT
+
 public:
     enum class Rank
     {
@@ -39,6 +42,8 @@ private:
     Rank rank;
     bool faceVisible = true;
 
+    static constexpr int DRAW_DURATION = 500;
+
 public:
     Card(Suit, Rank);
     Card(size_t suitIdx, size_t rankIdx);
@@ -58,6 +63,9 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     QRectF boundingRect() const override;
+
+    /* Starts playing this card's draw animation (as if it was drawn from the deck) */
+    void playDrawAnimation(QGraphicsScene*);
 
     static constexpr size_t SUITS = static_cast<size_t>(Suit::SPADES) + 1;
     static constexpr size_t RANKS = static_cast<size_t>(Rank::ACE) + 1;

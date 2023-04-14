@@ -1,8 +1,10 @@
 #include "card.h"
 
 #include "resources.h"
+#include "qutil.h"
 
 #include <QtMath>
+#include <QGraphicsScene>
 
 Card::Card(Suit suit, Rank value)
     : suit(suit), rank(value) {}
@@ -67,3 +69,15 @@ void Card::showFace()
     setFaceVisible(true);
 }
 
+void Card::playDrawAnimation(QGraphicsScene *scene)
+{
+    auto pos = this->pos();
+    QPointF startAt(pos.x(), (scene->itemsBoundingRect().height() - pos.y()) / 2);
+    auto moveAnim = makePropertyAnimation(this, "pos", scene);
+    moveAnim->setDuration(DRAW_DURATION);
+    moveAnim->setStartValue(startAt);
+    moveAnim->setEndValue(pos);
+    moveAnim->setEasingCurve({QEasingCurve::InBack});
+    moveAnim->start(QAbstractAnimation::DeleteWhenStopped);
+    setVisible(true);
+}

@@ -1,18 +1,36 @@
 #include "hand.h"
 #include "resources.h"
 #include "blackjack.h"
+#include "qutil.h"
+
+#include <QPropertyAnimation>
+#include <QApplication>
+#include <QGraphicsScene>
+#include <QTimer>
 
 Hand::Hand()
 {
     auto emptyCard = std::make_shared<Card>(Card::Suit::CLUBS, Card::Rank::ACE);
     emptyCard->hideFace();
-    cards.append(emptyCard);
+    add(emptyCard);
+}
+
+void Hand::add(std::shared_ptr<Card> card)
+{
+    cards.append(card);
 }
 
 void Hand::draw(Deck &deck, size_t n)
 {
-    for (size_t i = 0; i < n; ++i)
-        cards.append(deck.nextCard());
+    for (size_t i = 0; i < n; ++i) {
+        auto card = deck.nextCard();
+        card->setVisible(false);
+        doLater([this, card] {
+            card->playDrawAnimation(scene());
+            --cardsDrawing;
+        }, DRAW_DELAY * (cardsDrawing++));
+        add(card);
+    }
     update();
 }
 
@@ -54,8 +72,10 @@ void Hand::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     auto x = 0;
     for (auto card : cards) {
         card->setX(x);
-        card->paint(painter, option, widget);
         x += Resources::cardSheet->getRegionWidth();
+
+        if (card->isVisible())
+            card->paint(painter, option, widget);
     }
 }
 
