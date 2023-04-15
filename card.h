@@ -42,9 +42,10 @@ private:
     Rank rank;
     bool faceVisible = true;
 
+public:
     static constexpr int DRAW_DURATION = 500;
 
-public:
+    Card();
     Card(Suit, Rank);
     Card(size_t suitIdx, size_t rankIdx);
 

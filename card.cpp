@@ -6,6 +6,12 @@
 #include <QtMath>
 #include <QGraphicsScene>
 
+Card::Card()
+    : Card(Card::Suit::CLUBS, Card::Rank::ACE)
+{
+    setFaceVisible(false);
+}
+
 Card::Card(Suit suit, Rank value)
     : suit(suit), rank(value) {}
 
