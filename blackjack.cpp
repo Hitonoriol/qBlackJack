@@ -6,32 +6,47 @@
 BlackJack::BlackJack()
     : dealer(new Hand), player(new Hand) {}
 
-bool BlackJack::placeBet(int amount)
+bool BlackJack::startGame(int betAmount, Action afterStart)
 {
-    if (amount > balance || amount <= 0)
+    if (betAmount > balance || betAmount <= 0)
         return false;
 
-    balance -= amount;
-    bet = amount;
-    startGame();
+    balance -= betAmount;
+    bet = betAmount;
+    startGame().schedule(afterStart, Hand::timeToDraw(2) * 1.9);
     return true;
 }
 
-void BlackJack::hit()
+void BlackJack::hit(Action afterHit)
 {
-    player->draw(deck);
-    auto score = player->evaluate();
-    qDebug() << "Drew a card worth" << player->lastCard().getScore() << "; Total:" << score;
-    if (score > BJ)
-        state = GameState::Bust;
+    player->draw(deck, [this, afterHit] {
+        auto score = player->evaluate();
+        qDebug() << "Drew a card worth" << player->lastCard().getScore() << "; Total:" << score;
+        if (score > BJ)
+            state = GameState::Bust;
+        afterHit();
+    });
 }
 
-void BlackJack::stand()
+void BlackJack::stand(Action onGameEnd)
 {
     dealer->lastCard().showFace();
-    while (dealer->evaluate() < dealerThreshold)
-        dealer->draw(deck);
-    checkGameEndConditions();
+    doLater([this, onGameEnd] {
+        dealerAction(onGameEnd);
+    }, DEALER_ACTION_DELAY);
+}
+
+void BlackJack::dealerAction(Action onGameEnd)
+{
+    if (dealer->evaluate() < dealerThreshold) {
+        dealer->draw(deck, [this, onGameEnd]{
+            dealerAction(onGameEnd);
+        });
+    }
+    else {
+        checkGameEndConditions();
+        onGameEnd();
+    }
 }
 
 int BlackJack::getBalance()
@@ -81,22 +96,23 @@ Hand &BlackJack::getPlayerHand()
     return *player;
 }
 
-void BlackJack::startGame()
+TaskChain BlackJack::startGame()
 {
     state = GameState::InProgress;
     deck.reset();
     dealer->clear();
     player->clear();
-    dealer->draw(deck);
-    player->draw(deck);
-    dealer->draw(deck);
-    dealer->lastCard().hideFace();
-    player->draw(deck);
-
-    if (player->evaluate() == BJ) {
-        state = GameState::BlackJack;
-        balance += winAmount();
-    }
+    return TaskChain()
+        .schedule([this] {dealer->draw(deck);})
+        .schedule([this] {player->draw(deck);}, START_ACTION_DELAY)
+        .schedule([this] {dealer->drawHidden(deck);}, START_ACTION_DELAY)
+        .schedule([this] {player->draw(deck);}, START_ACTION_DELAY)
+        .schedule([this] {
+            if (player->evaluate() == BJ) {
+                state = GameState::BlackJack;
+                balance += winAmount();
+            }
+        });
 }
 
 void BlackJack::checkGameEndConditions()

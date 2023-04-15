@@ -26,5 +26,5 @@ void BetControls::balanceUpdated()
 
 void BetControls::placeBet()
 {
-    game.startGame(ui->betSlider->value());
+    game.doStartGame(ui->betSlider->value());
 }

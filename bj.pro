@@ -40,7 +40,8 @@ HEADERS += \
     qutil.h \
     resources.h \
     scene.h \
-    spritesheet.h
+    spritesheet.h \
+    types.h
 
 FORMS += \
     betcontrols.ui \

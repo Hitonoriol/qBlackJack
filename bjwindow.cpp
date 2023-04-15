@@ -58,47 +58,62 @@ void BJWindow::resizeEvent(QResizeEvent *event)
     gameSceneResized();
 }
 
-void BJWindow::startGame(int bet)
+void BJWindow::doStartGame(int bet)
 {
-    if (blackJack->placeBet(bet))
-        gameStarted();
+    blackJack->getDealerHand().prepareToDraw();
+    blackJack->getPlayerHand().prepareToDraw();
+    playerHandInfo->handIsUpdating();
+    dealerHandInfo->handIsUpdating();
+    if (blackJack->startGame(bet, [this]{gameStarted();})) {
+        notify("Your turn");
+        betControls->hide();
+        gameControls->show();
+        gameControls->setEnabled(false);
+    }
     else
         Dialog::error("Error", "Bet amount is invalid!");
 }
 
 void BJWindow::gameStarted()
 {
-    notify("Game in progress...");
-    betControls->hide();
-    gameControls->show();
+    qDebug() << "Game started!";
+    gameControls->setEnabled(true);
     gameInfo->infoUpdated();
     playerHandInfo->handUpdated();
     dealerHandInfo->handUpdated();
-    scene->center();
     if (!blackJack->isGameInProgress())
         gameEnded();
 }
 
 void BJWindow::doHit()
 {
-    blackJack->hit();
-    playerHandInfo->handUpdated();
-    dealerHandInfo->handUpdated();
+    playerHandInfo->handIsUpdating();
+    gameControls->setDisabled(true);
+    blackJack->hit([this] {
+        update();
+        playerHandInfo->handUpdated();
+        dealerHandInfo->handUpdated();
+        if (!blackJack->isGameInProgress())
+            gameEnded();
+        gameControls->setDisabled(false);
+    });
     scene->center();
     gameSceneResized();
-    if (!blackJack->isGameInProgress())
-        gameEnded();
 }
 
 void BJWindow::doStand()
 {
+    notify("Dealer's turn");
+    dealerHandInfo->handIsUpdating();
     gameControls->setDisabled(true);
-    blackJack->stand();
-    playerHandInfo->handUpdated();
-    dealerHandInfo->handUpdated();
+    blackJack->stand([this] {
+        update();
+        playerHandInfo->handUpdated();
+        dealerHandInfo->handUpdated();
+        gameEnded();
+    });
     scene->center();
     gameSceneResized();
-    gameEnded();
 }
 
 void BJWindow::gameEnded()

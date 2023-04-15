@@ -18,6 +18,7 @@ public:
     ~HandInfo();
 
     void handUpdated();
+    void handIsUpdating();
 
 private:
     Ui::HandInfo *ui;

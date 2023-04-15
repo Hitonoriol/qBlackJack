@@ -23,3 +23,8 @@ void HandInfo::handUpdated()
         hand.lastCard().isFaceVisible() ? hand.evaluate() : hand.firstCard().getScore()
     ));
 }
+
+void HandInfo::handIsUpdating()
+{
+    ui->infoLabel->setText("Dealing cards...");
+}

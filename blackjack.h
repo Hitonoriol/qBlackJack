@@ -1,6 +1,7 @@
 #ifndef BLACKJACK_H
 #define BLACKJACK_H
 
+#include "types.h"
 #include "deck.h"
 #include "hand.h"
 
@@ -25,9 +26,6 @@ private:
     /* Dealer's & player's hands.
      * Safe to allocate via `new` because they will be owned by `QGraphicsScene`,
      * not by this class.
-     *
-     * TODO: Make hands and cards non-Qt objects and create separate
-     * `HandView` and `CardView` classes for displaying them graphically.
      */
     Hand *dealer;
     Hand *player;
@@ -38,16 +36,20 @@ private:
     /* Score after which dealer stops drawing cards from the deck */
     size_t dealerThreshold = 17;
 
-    void startGame();
+    TaskChain startGame();
+    void dealerAction(Action onGameEnd);
     void checkGameEndConditions();
 
 public:
+    static constexpr int DEALER_ACTION_DELAY = 500;
+    static constexpr int START_ACTION_DELAY = 250;
+
     BlackJack();
 
-    bool placeBet(int amount);
+    bool startGame(int betAmount, Action afterStart);
 
-    void hit();
-    void stand();
+    void hit(Action afterHit);
+    void stand(Action onGameEnd);
 
     int getBalance();
     int getBet();

@@ -26,7 +26,7 @@ public:
 
     void resizeEvent(QResizeEvent*) override;
 
-    void startGame(int bet);
+    void doStartGame(int bet);
     void gameStarted();
     void doHit();
     void doStand();
