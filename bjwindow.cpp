@@ -63,6 +63,7 @@ void BJWindow::doStartGame(int bet)
     playerHandInfo->handIsUpdating();
     dealerHandInfo->handIsUpdating();
     if (blackJack->startGame(bet, [this]{gameStarted();})) {
+        Resources::audio->playBetSound();
         showGameControls();
         disableControls();
     }
@@ -83,14 +84,15 @@ void BJWindow::gameStarted()
 
 void BJWindow::doHit()
 {
+    Resources::audio->playClickSound();
     playerHandInfo->handIsUpdating();
     disableControls();
     blackJack->hit([this] {
         playerHandInfo->handUpdated();
         dealerHandInfo->handUpdated();
+        enableControls();
         if (!blackJack->isGameInProgress())
             gameEnded();
-        enableControls();
     });
     scene->center();
     gameSceneResized();
@@ -98,6 +100,7 @@ void BJWindow::doHit()
 
 void BJWindow::doStand()
 {
+    Resources::audio->playClickSound();
     notify("Dealer's turn");
     dealerHandInfo->handIsUpdating();
     disableControls();
@@ -119,6 +122,7 @@ void BJWindow::gameEnded()
     showBetControls();
     betControls->balanceUpdated();
     gameInfo->infoUpdated();
+
     switch(blackJack->getGameState()) {
     case BlackJack::GameState::Bust:
         Dialog::warning(
@@ -167,7 +171,7 @@ BlackJack &BJWindow::getBlackJack()
 
 void BJWindow::showGameControls(bool show)
 {
-    notify(show ? "Place a bet to begin the game." : "Your turn.");
+    notify(show ? "Your turn." : "Place a bet to begin the game.");
     gameControls->setVisible(show);
     betControls->setVisible(!show);
 }
@@ -242,8 +246,10 @@ void BJWindow::doResetGame()
         resetCards();
     }
 
+    enableControls();
     blackJack->resetBalance();
     gameInfo->infoUpdated();
+    betControls->balanceUpdated();
 }
 
 

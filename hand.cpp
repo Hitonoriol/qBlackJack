@@ -44,6 +44,7 @@ void Hand::draw(Deck &deck, bool faceVisible)
         centerScene();
 
     doLater([this, card] {
+        Resources::audio->playDealSound();
         card->playDrawAnimation(scene());
         --cardsDrawing;
     }, DRAW_DELAY * (cardsDrawing++));

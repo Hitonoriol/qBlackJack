@@ -7,8 +7,6 @@ BetControls::BetControls(BJWindow &game) :
     game(game)
 {
     ui->setupUi(this);
-    ui->betSlider->setMinimum(1);
-    ui->betSpinBox->setMinimum(1);
     balanceUpdated();
 }
 
@@ -20,6 +18,8 @@ BetControls::~BetControls()
 void BetControls::balanceUpdated()
 {
     auto balance = game.getBlackJack().getBalance();
+    ui->betSlider->setMinimum(1);
+    ui->betSpinBox->setMinimum(1);
     ui->betSlider->setMaximum(balance);
     ui->betSpinBox->setMaximum(balance);
 }
