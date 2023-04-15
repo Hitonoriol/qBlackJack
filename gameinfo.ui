@@ -2,12 +2,27 @@
 <ui version="4.0">
  <class>GameInfo</class>
  <widget class="QWidget" name="GameInfo">
+  <property name="font">
+   <font>
+    <strikeout>false</strikeout>
+    <kerning>true</kerning>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QLabel" name="balanceLabel">
+     <property name="font">
+      <font>
+       <family>Lato Semibold</family>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+       <strikeout>false</strikeout>
+       <kerning>true</kerning>
+      </font>
+     </property>
      <property name="text">
       <string>Balance: $100</string>
      </property>
@@ -31,6 +46,15 @@
    </item>
    <item>
     <widget class="QLabel" name="betLabel">
+     <property name="font">
+      <font>
+       <family>Lato Semibold</family>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+       <strikeout>false</strikeout>
+       <kerning>true</kerning>
+      </font>
+     </property>
      <property name="text">
       <string>Bet: $0</string>
      </property>

@@ -7,6 +7,7 @@ BetControls::BetControls(BJWindow &game) :
     game(game)
 {
     ui->setupUi(this);
+    ui->betSlider->setValue(10);
     balanceUpdated();
 }
 
