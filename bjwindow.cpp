@@ -8,6 +8,7 @@
 #include "betcontrols.h"
 #include "gameinfo.h"
 #include "handinfo.h"
+#include "gameendmessage.h"
 
 #include <QGraphicsProxyWidget>
 #include <QGraphicsLinearLayout>
@@ -108,7 +109,9 @@ void BJWindow::doStand()
         update();
         playerHandInfo->handUpdated();
         dealerHandInfo->handUpdated();
-        gameEnded();
+        doLater([this] {
+            gameEnded();
+        }, 250);
     });
     scene->center();
     gameSceneResized();
@@ -123,45 +126,19 @@ void BJWindow::gameEnded()
     betControls->balanceUpdated();
     gameInfo->infoUpdated();
 
-    switch(blackJack->getGameState()) {
-    case BlackJack::GameState::Bust:
-        Dialog::warning(
-            "Bust",
-            notify(Resources::bustMsg.arg(blackJack->getBet()))
-        );
-        break;
-
-    case BlackJack::GameState::Loss:
-        Dialog::warning(
-            "Loss",
-            notify(Resources::lossMsg.arg(blackJack->getBet()))
-        );
-        break;
-
-    case BlackJack::GameState::Push:
-        Dialog::info(
-            "Push",
-            notify(Resources::pushMsg)
-        );
-        break;
-
-    case BlackJack::GameState::BlackJack:
-        Dialog::info(
-            "BlackJack",
-            notify(Resources::winMsg.arg(blackJack->winAmount()))
-        );
-        break;
-
-    case BlackJack::GameState::Win:
-        Dialog::info(
-            "Win",
-            notify(Resources::winMsg.arg(blackJack->winAmount()))
-        );
-        break;
-
-    default:
-        break;
-    }
+    auto endMessage = scene->addWidget(new GameEndMessage(*this));
+    endMessage->setMinimumSize(ui->gameView->width(), ui->gameView->height());
+    scene->center();
+    TaskChain()
+        .schedule([this, endMessage] {
+            fadeIn(endMessage, scene, GAME_END_FADE_IN);
+        })
+        .schedule([this, endMessage] {
+            fadeOut(endMessage, scene, GAME_END_FADE_OUT);
+        }, GAME_END_DURATION)
+        .schedule([this, endMessage] {
+            scene->removeItem(endMessage);
+        }, GAME_END_FADE_OUT);
 }
 
 BlackJack &BJWindow::getBlackJack()
@@ -202,9 +179,13 @@ void BJWindow::gameSceneResized()
 {
     auto width = ui->gameView->width();
     auto height = ui->gameView->height();
+    auto controlsWidth = width / 5;
     scene->setSceneRect(-width / 2, 0, width, height);
     ui->gameView->fitInView(scene->itemsBoundingRect(), Qt::AspectRatioMode::KeepAspectRatio);
     ui->gameView->centerOn(0, 0);
+    betControls->setMinimumWidth(controlsWidth);
+    gameControls->setMinimumWidth(controlsWidth);
+    scene->center();
 }
 
 const QString& BJWindow::notify(const QString &message)

@@ -18,7 +18,9 @@ SOURCES += \
     dialogs.h \
     gameaudio.cpp \
     gamecontrols.cpp \
+    gameendmessage.cpp \
     gameinfo.cpp \
+    gamesceneview.cpp \
     hand.cpp \
     handinfo.cpp \
     main.cpp \
@@ -36,7 +38,9 @@ HEADERS += \
     deck.h \
     gameaudio.h \
     gamecontrols.h \
+    gameendmessage.h \
     gameinfo.h \
+    gamesceneview.h \
     hand.h \
     handinfo.h \
     qutil.h \
@@ -49,6 +53,7 @@ FORMS += \
     betcontrols.ui \
     bjwindow.ui \
     gamecontrols.ui \
+    gameendmessage.ui \
     gameinfo.ui \
     handinfo.ui
 

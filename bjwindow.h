@@ -15,6 +15,7 @@ class BetControls;
 class GameControls;
 class GameInfo;
 class HandInfo;
+class GameEndMessage;
 
 class BJWindow : public QMainWindow
 {
@@ -23,6 +24,8 @@ class BJWindow : public QMainWindow
 public:
     BJWindow(QWidget *parent = nullptr);
     ~BJWindow();
+
+    const QString& notify(const QString&);
 
     void resizeEvent(QResizeEvent*) override;
 
@@ -45,6 +48,10 @@ private:
     HandInfo *dealerHandInfo, *playerHandInfo;
 
     static constexpr double LABEL_PADDING = 30;
+    static constexpr int
+        GAME_END_FADE_IN = 200,
+        GAME_END_DURATION = GAME_END_FADE_IN + 5000,
+        GAME_END_FADE_OUT = 1000;
 
     void showGameControls(bool show = true);
     void showBetControls();
@@ -54,8 +61,6 @@ private:
     void resetCards();
 
     void gameSceneResized();
-
-    const QString& notify(const QString&);
 
 private slots:
     void doChangeCardSkin();
