@@ -14,12 +14,16 @@ GameAudio::GameAudio()
     bgMusicPlayer->setSource(QUrl("qrc:/sound/soundtrack.ogg"));
     bgMusicPlayer->setLoops(QMediaPlayer::Infinite);
     audioOutput->setVolume(0.035f);
-    bgMusicPlayer->play();
 }
 
 void GameAudio::enableSoundEffects(bool enable)
 {
     soundEffectsEnabled = enable;
+}
+
+void GameAudio::playBgMusic()
+{
+    bgMusicPlayer->play();
 }
 
 void GameAudio::playBetSound()

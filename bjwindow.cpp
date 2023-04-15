@@ -45,6 +45,7 @@ BJWindow::BJWindow(QWidget *parent)
 
     show();
     gameSceneResized();
+    Resources::audio->playBgMusic();
 }
 
 BJWindow::~BJWindow()

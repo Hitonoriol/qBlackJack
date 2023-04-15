@@ -30,6 +30,8 @@ public:
 
     void enableSoundEffects(bool enable);
 
+    void playBgMusic();
+
     void playBetSound();
     void playClickSound();
     void playDealSound();
