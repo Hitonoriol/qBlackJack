@@ -7,7 +7,7 @@
 class Scene : public QGraphicsScene
 {
 private:
-    double lastY;
+    double lastY = 0;
 
     void centerItem(QGraphicsItem*);
 
