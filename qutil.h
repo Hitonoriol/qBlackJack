@@ -12,6 +12,25 @@ QPropertyAnimation* makePropertyAnimation(
     QGraphicsObject *obj, const QByteArray& propName, QGraphicsScene *scene
 );
 
+QPropertyAnimation* fade(
+    QGraphicsObject *obj, QGraphicsScene *scene,
+    int durationMsec, bool fadeIn);
+
+inline QPropertyAnimation* fadeIn(
+    QGraphicsObject *obj, QGraphicsScene *scene, int durationMsec
+)
+{
+    return fade(obj, scene, durationMsec, true);
+}
+
+
+inline QPropertyAnimation* fadeOut(
+    QGraphicsObject *obj, QGraphicsScene *scene, int durationMsec
+)
+{
+    return fade(obj, scene, durationMsec, false);
+}
+
 template<typename F>
 void doLater(F &&action, int waitMsec)
 {
