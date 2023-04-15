@@ -5,6 +5,7 @@
 #include <QGraphicsObject>
 #include <QPropertyAnimation>
 #include <QTimer>
+#include <QtMath>
 
 /* Make a property animation for a QGraphicsObject */
 QPropertyAnimation* makePropertyAnimation(
@@ -14,7 +15,23 @@ QPropertyAnimation* makePropertyAnimation(
 template<typename F>
 void doLater(F &&action, int waitMsec)
 {
-    QTimer::singleShot(waitMsec, action);
+    QTimer::singleShot(qMax(0, waitMsec), action);
 }
+
+/* A chain of tasks that are scheduled to be executed at
+ * some points in the future one after another. */
+class TaskChain
+{
+private:
+    int delay = 0;
+
+public:
+    template<typename F>
+    inline TaskChain& schedule(F &&task, int waitMsec = 5)
+    {
+        doLater(task, delay += waitMsec);
+        return *this;
+    }
+};
 
 #endif // QUTIL_H
