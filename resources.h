@@ -1,6 +1,8 @@
 #ifndef RESOURCES_H
 #define RESOURCES_H
 
+#include "gameaudio.h"
+
 #include <QString>
 #include <memory>
 
@@ -25,6 +27,7 @@ public:
         winMsg,
         lossMsg,
         pushMsg;
+    static std::unique_ptr<GameAudio> audio;
 
     static QString readFile(const QString&);
 

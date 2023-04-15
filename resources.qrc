@@ -2,5 +2,9 @@
     <qresource prefix="/">
         <file>style/stylesheet.qss</file>
         <file>textures/cards.png</file>
+        <file>sound/soundtrack.ogg</file>
+        <file>sound/bet.wav</file>
+        <file>sound/deal.wav</file>
+        <file>sound/click.wav</file>
     </qresource>
 </RCC>

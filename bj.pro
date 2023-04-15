@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,6 +16,7 @@ SOURCES += \
     card.cpp \
     deck.cpp \
     dialogs.h \
+    gameaudio.cpp \
     gamecontrols.cpp \
     gameinfo.cpp \
     hand.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     blackjack.h \
     card.h \
     deck.h \
+    gameaudio.h \
     gamecontrols.h \
     gameinfo.h \
     hand.h \

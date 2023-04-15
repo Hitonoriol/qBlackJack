@@ -19,10 +19,16 @@ QString
     Resources::lossMsg("You lost your bet of $%1."),
     Resources::pushMsg("Dealer has an equivalent hand. Your bet is refunded.");
 
+std::unique_ptr<GameAudio> Resources::audio;
+
 void Resources::load()
 {
+    if (cardSheet)
+        return;
+
     loadCardSheet(":/textures/cards.png");
     defaultCardSheet = cardSheet;
+    audio = std::make_unique<GameAudio>();
 }
 
 QString Resources::readFile(const QString &path)
