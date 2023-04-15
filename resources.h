@@ -12,6 +12,8 @@ private:
     friend class BJWindow;
     static void load();
 
+    static std::shared_ptr<SpriteSheet> defaultCardSheet;
+
 public:
     static std::shared_ptr<SpriteSheet> cardSheet;
     static QString
@@ -25,6 +27,9 @@ public:
         pushMsg;
 
     static QString readFile(const QString&);
+
+    static void loadCardSheet(const QString&);
+    static void resetCardSheet();
 };
 
 #endif // RESOURCES_H

@@ -20,6 +20,8 @@ public:
     };
 
 private:
+    static constexpr int DEFAULT_BALANCE = 100;
+
     GameState state = GameState::None;
     Deck deck;
 
@@ -30,7 +32,7 @@ private:
     Hand *dealer;
     Hand *player;
 
-    int balance = 100;
+    int balance = DEFAULT_BALANCE;
     int bet = 0;
 
     /* Score after which dealer stops drawing cards from the deck */
@@ -56,6 +58,7 @@ public:
 
     GameState getGameState();
     bool isGameInProgress();
+    void resetBalance();
 
     int winAmount();
 

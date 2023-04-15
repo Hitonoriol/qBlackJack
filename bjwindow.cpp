@@ -13,6 +13,7 @@
 #include <QGraphicsLinearLayout>
 #include <QGraphicsWidget>
 #include <QScrollBar>
+#include <QFileDialog>
 
 BJWindow::BJWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -24,14 +25,12 @@ BJWindow::BJWindow(QWidget *parent)
     ui->setupUi(this);
     ui->gameView->verticalScrollBar()->blockSignals(true);
 
-    notify("Place a bet to begin the game.");
-
     betControls = new BetControls(*this);
     gameControls = new GameControls(*this);
     gameInfo = new GameInfo(*this);
     dealerHandInfo = new HandInfo(blackJack->getDealerHand());
     playerHandInfo = new HandInfo(blackJack->getPlayerHand());
-    gameControls->hide();
+    showBetControls();
 
     /* Populate the game scene */
     scene->append(scene->addWidget(gameInfo)).pad(LABEL_PADDING);
@@ -60,15 +59,12 @@ void BJWindow::resizeEvent(QResizeEvent *event)
 
 void BJWindow::doStartGame(int bet)
 {
-    blackJack->getDealerHand().prepareToDraw();
-    blackJack->getPlayerHand().prepareToDraw();
+    resetCards();
     playerHandInfo->handIsUpdating();
     dealerHandInfo->handIsUpdating();
     if (blackJack->startGame(bet, [this]{gameStarted();})) {
-        notify("Your turn");
-        betControls->hide();
-        gameControls->show();
-        gameControls->setEnabled(false);
+        showGameControls();
+        disableControls();
     }
     else
         Dialog::error("Error", "Bet amount is invalid!");
@@ -77,7 +73,7 @@ void BJWindow::doStartGame(int bet)
 void BJWindow::gameStarted()
 {
     qDebug() << "Game started!";
-    gameControls->setEnabled(true);
+    enableControls();
     gameInfo->infoUpdated();
     playerHandInfo->handUpdated();
     dealerHandInfo->handUpdated();
@@ -88,14 +84,13 @@ void BJWindow::gameStarted()
 void BJWindow::doHit()
 {
     playerHandInfo->handIsUpdating();
-    gameControls->setDisabled(true);
+    disableControls();
     blackJack->hit([this] {
-        update();
         playerHandInfo->handUpdated();
         dealerHandInfo->handUpdated();
         if (!blackJack->isGameInProgress())
             gameEnded();
-        gameControls->setDisabled(false);
+        enableControls();
     });
     scene->center();
     gameSceneResized();
@@ -105,7 +100,7 @@ void BJWindow::doStand()
 {
     notify("Dealer's turn");
     dealerHandInfo->handIsUpdating();
-    gameControls->setDisabled(true);
+    disableControls();
     blackJack->stand([this] {
         update();
         playerHandInfo->handUpdated();
@@ -118,10 +113,11 @@ void BJWindow::doStand()
 
 void BJWindow::gameEnded()
 {
-    gameControls->setDisabled(false);
-    gameControls->hide();
+    if (blackJack->getBalance() > 0)
+        enableControls();
+
+    showBetControls();
     betControls->balanceUpdated();
-    betControls->show();
     gameInfo->infoUpdated();
     switch(blackJack->getGameState()) {
     case BlackJack::GameState::Bust:
@@ -169,6 +165,35 @@ BlackJack &BJWindow::getBlackJack()
     return *blackJack;
 }
 
+void BJWindow::showGameControls(bool show)
+{
+    notify(show ? "Place a bet to begin the game." : "Your turn.");
+    gameControls->setVisible(show);
+    betControls->setVisible(!show);
+}
+
+void BJWindow::showBetControls()
+{
+    showGameControls(false);
+}
+
+void BJWindow::enableControls(bool value)
+{
+    gameControls->setEnabled(value);
+    betControls->setEnabled(value);
+}
+
+void BJWindow::disableControls()
+{
+    enableControls(false);
+}
+
+void BJWindow::resetCards()
+{
+    blackJack->getDealerHand().prepareToDraw();
+    blackJack->getPlayerHand().prepareToDraw();
+}
+
 void BJWindow::gameSceneResized()
 {
     auto width = ui->gameView->width();
@@ -182,6 +207,43 @@ const QString& BJWindow::notify(const QString &message)
 {
     ui->statusbar->showMessage(message);
     return message;
+}
+
+void BJWindow::doChangeCardSkin()
+{
+    auto fileName = QFileDialog::getOpenFileName(this,
+        "Open Card Skin",
+        "./",
+        "Image Files (*.png *.jpg *.bmp)"
+    );
+    try {
+        QFile sheetFile(fileName);
+        if (!fileName.isEmpty() && sheetFile.exists())
+            Resources::loadCardSheet(fileName);
+        else
+            Dialog::error("Error", "Couldn't open specified card skin file");
+    } catch (...) {
+        Dialog::error("Error", "An exception has occurred while trying to load the card skin");
+        Resources::resetCardSheet();
+    }
+    scene->update();
+}
+
+void BJWindow::doResetSkin()
+{
+    Resources::resetCardSheet();
+    scene->update();
+}
+
+void BJWindow::doResetGame()
+{
+    if (blackJack->isGameInProgress()) {
+        showBetControls();
+        resetCards();
+    }
+
+    blackJack->resetBalance();
+    gameInfo->infoUpdated();
 }
 
 

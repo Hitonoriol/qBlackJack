@@ -46,9 +46,21 @@ private:
 
     static constexpr double LABEL_PADDING = 30;
 
+    void showGameControls(bool show = true);
+    void showBetControls();
+    void enableControls(bool value = true);
+    void disableControls();
+
+    void resetCards();
+
     void gameSceneResized();
 
     const QString& notify(const QString&);
+
+private slots:
+    void doChangeCardSkin();
+    void doResetSkin();
+    void doResetGame();
 };
 
 #endif // BJWINDOW_H

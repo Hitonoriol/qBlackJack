@@ -88,15 +88,16 @@
    </property>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
-     <string>Settings</string>
+     <string>Card Skin</string>
     </property>
     <addaction name="loadCardSkinAction"/>
+    <addaction name="resetCardSkinAction"/>
    </widget>
    <widget class="QMenu" name="menuGame">
     <property name="title">
      <string>Game</string>
     </property>
-    <addaction name="actionReset"/>
+    <addaction name="resetGameAction"/>
    </widget>
    <addaction name="menuGame"/>
    <addaction name="menuSettings"/>
@@ -104,15 +105,74 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="loadCardSkinAction">
    <property name="text">
-    <string>Load card skin</string>
+    <string>Load from File</string>
    </property>
   </action>
-  <action name="actionReset">
+  <action name="resetGameAction">
    <property name="text">
-    <string>Reset</string>
+    <string>Reset Balance</string>
+   </property>
+  </action>
+  <action name="resetCardSkinAction">
+   <property name="text">
+    <string>Reset to Default</string>
    </property>
   </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>loadCardSkinAction</sender>
+   <signal>triggered()</signal>
+   <receiver>BJWindow</receiver>
+   <slot>doChangeCardSkin()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>224</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>resetCardSkinAction</sender>
+   <signal>triggered()</signal>
+   <receiver>BJWindow</receiver>
+   <slot>doResetSkin()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>224</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>resetGameAction</sender>
+   <signal>triggered()</signal>
+   <receiver>BJWindow</receiver>
+   <slot>doResetGame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>224</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>doChangeCardSkin()</slot>
+  <slot>doResetSkin()</slot>
+  <slot>doResetGame()</slot>
+ </slots>
 </ui>

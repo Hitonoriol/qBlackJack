@@ -69,6 +69,13 @@ bool BlackJack::isGameInProgress()
     return state == GameState::InProgress;
 }
 
+void BlackJack::resetBalance()
+{
+    balance = DEFAULT_BALANCE;
+    bet = 0;
+    state = GameState::None;
+}
+
 int BlackJack::winAmount()
 {
     switch(state) {
