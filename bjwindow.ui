@@ -99,8 +99,16 @@
     </property>
     <addaction name="resetGameAction"/>
    </widget>
+   <widget class="QMenu" name="menuSound">
+    <property name="title">
+     <string>Sound</string>
+    </property>
+    <addaction name="toggleMusicAction"/>
+    <addaction name="toggleSoundEffectsAction"/>
+   </widget>
    <addaction name="menuGame"/>
    <addaction name="menuSettings"/>
+   <addaction name="menuSound"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="loadCardSkinAction">
@@ -116,6 +124,28 @@
   <action name="resetCardSkinAction">
    <property name="text">
     <string>Reset to Default</string>
+   </property>
+  </action>
+  <action name="toggleMusicAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Music</string>
+   </property>
+  </action>
+  <action name="toggleSoundEffectsAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Sound Effects</string>
    </property>
   </action>
  </widget>
@@ -169,10 +199,44 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>toggleMusicAction</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>BJWindow</receiver>
+   <slot>doSetMusicEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>224</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toggleSoundEffectsAction</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>BJWindow</receiver>
+   <slot>doSetSoundEffectsEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>224</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>doChangeCardSkin()</slot>
   <slot>doResetSkin()</slot>
   <slot>doResetGame()</slot>
+  <slot>doSetSoundEffectsEnabled(bool)</slot>
+  <slot>doSetMusicEnabled(bool)</slot>
  </slots>
 </ui>

@@ -252,4 +252,18 @@ void BJWindow::doResetGame()
     betControls->balanceUpdated();
 }
 
+void BJWindow::doSetMusicEnabled(bool enabled)
+{
+    auto &player = Resources::audio->getBgMusicPlayer();
+    if (!enabled)
+        player.stop();
+    else
+        player.play();
+}
+
+void BJWindow::doSetSoundEffectsEnabled(bool enabled)
+{
+    Resources::audio->enableSoundEffects(enabled);
+}
+
 

@@ -61,6 +61,9 @@ private slots:
     void doChangeCardSkin();
     void doResetSkin();
     void doResetGame();
+
+    void doSetMusicEnabled(bool enabled);
+    void doSetSoundEffectsEnabled(bool enabled);
 };
 
 #endif // BJWINDOW_H

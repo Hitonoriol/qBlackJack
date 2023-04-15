@@ -14,19 +14,24 @@ GameAudio::GameAudio()
     bgMusicPlayer->play();
 }
 
+void GameAudio::enableSoundEffects(bool enable)
+{
+    soundEffectsEnabled = enable;
+}
+
 void GameAudio::playBetSound()
 {
-    betSound->play();
+    playSound(*betSound);
 }
 
 void GameAudio::playClickSound()
 {
-    clickSound->play();
+    playSound(*clickSound);
 }
 
 void GameAudio::playDealSound()
 {
-     dealSound->play();
+    playSound(*dealSound);
 }
 
 std::unique_ptr<QSoundEffect> GameAudio::loadSoundEffect(const QString &file)
@@ -35,6 +40,12 @@ std::unique_ptr<QSoundEffect> GameAudio::loadSoundEffect(const QString &file)
     sound->setSource(QUrl("qrc:/sound/" + file));
     sound->setVolume(0.3f);
     return sound;
+}
+
+void GameAudio::playSound(QSoundEffect &sound)
+{
+    if (soundEffectsEnabled)
+        sound.play();
 }
 
 QAudioOutput& GameAudio::getAudioOutput()

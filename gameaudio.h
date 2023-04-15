@@ -18,8 +18,14 @@ private:
 
     static std::unique_ptr<QSoundEffect> loadSoundEffect(const QString&);
 
+    bool soundEffectsEnabled = true;
+
+    void playSound(QSoundEffect&);
+
 public:
     GameAudio();
+
+    void enableSoundEffects(bool enable);
 
     void playBetSound();
     void playClickSound();
