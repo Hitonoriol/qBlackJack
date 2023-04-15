@@ -1,37 +1,58 @@
 #include "hand.h"
 #include "resources.h"
 #include "blackjack.h"
-#include "qutil.h"
+#include "scene.h"
 
 #include <QPropertyAnimation>
 #include <QApplication>
 #include <QGraphicsScene>
 #include <QTimer>
 
+std::shared_ptr<Card> Hand::placeholderCard;
+
 Hand::Hand()
 {
-    auto emptyCard = std::make_shared<Card>(Card::Suit::CLUBS, Card::Rank::ACE);
-    emptyCard->hideFace();
-    add(emptyCard);
+    if (!placeholderCard)
+        placeholderCard = std::make_shared<Card>();
+
+    prepareToDraw();
 }
 
 void Hand::add(std::shared_ptr<Card> card)
 {
     cards.append(card);
+    update();
 }
 
-void Hand::draw(Deck &deck, size_t n)
+void Hand::centerScene()
 {
-    for (size_t i = 0; i < n; ++i) {
-        auto card = deck.nextCard();
-        card->setVisible(false);
-        doLater([this, card] {
-            card->playDrawAnimation(scene());
-            --cardsDrawing;
-        }, DRAW_DELAY * (cardsDrawing++));
-        add(card);
-    }
-    update();
+    auto scene = dynamic_cast<Scene*>(this->scene());
+    if (scene)
+        scene->center();
+}
+
+void Hand::draw(Deck &deck, bool faceVisible)
+{
+    auto card = deck.nextCard();
+    card->setFaceVisible(faceVisible);
+    card->setVisible(false);
+    add(card);
+
+    /* The scene is pre-centered when dealing the initial 2 cards,
+     * so no need to do this here */
+    if (cards.size() > 2)
+        centerScene();
+
+    doLater([this, card] {
+        card->playDrawAnimation(scene());
+        --cardsDrawing;
+    }, DRAW_DELAY * (cardsDrawing++));
+}
+
+void Hand::draw(Deck &deck, Action afterDraw, bool faceVisible)
+{
+    draw(deck, faceVisible);
+    doLater(afterDraw, Card::DRAW_DURATION + DRAW_DELAY * (cardsDrawing - 1));
 }
 
 Card &Hand::lastCard()
@@ -64,7 +85,15 @@ size_t Hand::evaluate()
 void Hand::clear()
 {
     cards.clear();
+}
+
+void Hand::prepareToDraw()
+{
+    cards.clear();
+    cards.append(placeholderCard);
+    cards.append(placeholderCard);
     update();
+    centerScene();
 }
 
 void Hand::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
