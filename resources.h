@@ -18,6 +18,9 @@ private:
 
 public:
     static std::shared_ptr<SpriteSheet> cardSheet;
+
+    static std::unique_ptr<QImage> gameBackground;
+
     static QString
         balanceString,
         betString,
@@ -27,6 +30,7 @@ public:
         winMsg,
         lossMsg,
         pushMsg;
+
     static std::unique_ptr<GameAudio> audio;
 
     static QString readFile(const QString&);

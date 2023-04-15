@@ -10,13 +10,15 @@ std::shared_ptr<SpriteSheet>
     Resources::cardSheet,
     Resources::defaultCardSheet;
 
+std::unique_ptr<QImage> Resources::gameBackground;
+
 QString
     Resources::balanceString("Balance: $%1"),
     Resources::betString("Bet: $%1"),
     Resources::handString("Hand score: %1"),
-    Resources::bustMsg("You busted and lost your bet of $%1."),
-    Resources::winMsg("Congratulations! You won $%1!"),
-    Resources::lossMsg("You lost your bet of $%1."),
+    Resources::bustMsg("You busted and lost your bet of <span style='color:red'>$%1</span>."),
+    Resources::winMsg("Congratulations! You won <span style='color:green'>$%1</span>!"),
+    Resources::lossMsg("You lost your bet of <span style='color:red'>$%1</span>."),
     Resources::pushMsg("Dealer has an equivalent hand. Your bet is refunded.");
 
 std::unique_ptr<GameAudio> Resources::audio;
@@ -27,6 +29,7 @@ void Resources::load()
         return;
 
     loadCardSheet(":/textures/cards.png");
+    gameBackground = std::make_unique<QImage>(":/textures/bg.png");
     defaultCardSheet = cardSheet;
     audio = std::make_unique<GameAudio>();
 }

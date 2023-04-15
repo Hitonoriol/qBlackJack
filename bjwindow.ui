@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>550</height>
+    <width>820</width>
+    <height>530</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>350</width>
-    <height>430</height>
+    <width>820</width>
+    <height>530</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QGraphicsView" name="gameView">
+     <widget class="GameSceneView" name="gameView">
       <property name="font">
        <font>
         <pointsize>12</pointsize>
@@ -82,7 +82,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>450</width>
+     <width>820</width>
      <height>21</height>
     </rect>
    </property>
@@ -149,6 +149,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GameSceneView</class>
+   <extends>QGraphicsView</extends>
+   <header>gamesceneview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
