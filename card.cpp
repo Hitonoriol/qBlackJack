@@ -22,6 +22,7 @@ void Card::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 {
     auto rank_idx = faceVisible ? toIdx(rank) : 0u;
     auto suit_idx = toIdx(faceVisible ? suit : Suit::HIDDEN);
+    painter->setOpacity(opacity());
     Resources::cardSheet->paintRegion(
         painter,
         pos(),
@@ -85,5 +86,6 @@ void Card::playDrawAnimation(QGraphicsScene *scene)
     moveAnim->setEndValue(pos);
     moveAnim->setEasingCurve({QEasingCurve::InBack});
     moveAnim->start(QAbstractAnimation::DeleteWhenStopped);
+    fadeIn(this, scene, 300);
     setVisible(true);
 }
