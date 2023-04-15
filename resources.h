@@ -19,7 +19,7 @@ private:
 public:
     static std::shared_ptr<SpriteSheet> cardSheet;
 
-    static std::unique_ptr<QImage> gameBackground;
+    static std::unique_ptr<QPixmap> gameBackground;
 
     static QString
         balanceString,

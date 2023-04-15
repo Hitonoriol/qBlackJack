@@ -10,7 +10,7 @@ std::shared_ptr<SpriteSheet>
     Resources::cardSheet,
     Resources::defaultCardSheet;
 
-std::unique_ptr<QImage> Resources::gameBackground;
+std::unique_ptr<QPixmap> Resources::gameBackground;
 
 QString
     Resources::balanceString("Balance: $%1"),
@@ -29,7 +29,7 @@ void Resources::load()
         return;
 
     loadCardSheet(":/textures/cards.png");
-    gameBackground = std::make_unique<QImage>(":/textures/bg.png");
+    gameBackground = std::make_unique<QPixmap>(":/textures/bg.png");
     defaultCardSheet = cardSheet;
     audio = std::make_unique<GameAudio>();
 }

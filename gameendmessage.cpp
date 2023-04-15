@@ -28,26 +28,31 @@ void GameEndMessage::setVisible(bool visible)
     case BlackJack::GameState::Bust:
         setTitle("Bust");
         setDescription(Resources::bustMsg.arg(blackJack.getBet()));
+        Resources::audio->playLossSound();
         break;
 
     case BlackJack::GameState::Loss:
         setTitle("Loss");
         setDescription(Resources::lossMsg.arg(blackJack.getBet()));
+        Resources::audio->playLossSound();
         break;
 
     case BlackJack::GameState::Push:
         setTitle("Push");
         setDescription(Resources::pushMsg);
+        Resources::audio->playPushSound();
         break;
 
     case BlackJack::GameState::BlackJack:
         setTitle("BlackJack");
         setDescription(Resources::winMsg.arg(blackJack.winAmount()));
+        Resources::audio->playWinSound();
         break;
 
     case BlackJack::GameState::Win:
         setTitle("Win");
         setDescription(Resources::winMsg.arg(blackJack.winAmount()));
+        Resources::audio->playWinSound();
         break;
 
     default:

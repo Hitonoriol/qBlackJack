@@ -5,7 +5,10 @@ GameAudio::GameAudio()
     audioOutput(std::make_unique<QAudioOutput>()),
     dealSound(loadSoundEffect("deal.wav")),
     betSound(loadSoundEffect("bet.wav")),
-    clickSound(loadSoundEffect("click.wav"))
+    clickSound(loadSoundEffect("click.wav")),
+    winSound(loadSoundEffect("win.wav")),
+    lossSound(loadSoundEffect("loss.wav")),
+    pushSound(loadSoundEffect("push.wav"))
 {
     bgMusicPlayer->setAudioOutput(audioOutput.get());
     bgMusicPlayer->setSource(QUrl("qrc:/sound/soundtrack.ogg"));
@@ -32,6 +35,21 @@ void GameAudio::playClickSound()
 void GameAudio::playDealSound()
 {
     playSound(*dealSound);
+}
+
+void GameAudio::playWinSound()
+{
+    playSound(*winSound);
+}
+
+void GameAudio::playLossSound()
+{
+    playSound(*lossSound);
+}
+
+void GameAudio::playPushSound()
+{
+    playSound(*pushSound);
 }
 
 std::unique_ptr<QSoundEffect> GameAudio::loadSoundEffect(const QString &file)

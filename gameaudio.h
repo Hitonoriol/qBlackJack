@@ -14,7 +14,10 @@ private:
     std::unique_ptr<QSoundEffect>
         dealSound,
         betSound,
-        clickSound;
+        clickSound,
+        winSound,
+        lossSound,
+        pushSound;
 
     static std::unique_ptr<QSoundEffect> loadSoundEffect(const QString&);
 
@@ -30,6 +33,10 @@ public:
     void playBetSound();
     void playClickSound();
     void playDealSound();
+
+    void playWinSound();
+    void playLossSound();
+    void playPushSound();
 
     QAudioOutput& getAudioOutput();
     QMediaPlayer& getBgMusicPlayer();
