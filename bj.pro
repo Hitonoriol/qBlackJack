@@ -2,6 +2,7 @@ QT       += core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+QMAKE_CXX = g++
 CONFIG += c++17
 
 RESOURCES = resources.qrc
@@ -10,55 +11,55 @@ RESOURCES = resources.qrc
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += src
+
 SOURCES += \
-    betcontrols.cpp \
-    blackjack.cpp \
-    card.cpp \
-    deck.cpp \
-    dialogs.h \
-    gameaudio.cpp \
-    gamecontrols.cpp \
-    gameendmessage.cpp \
-    gameinfo.cpp \
-    gamesceneview.cpp \
-    hand.cpp \
-    handinfo.cpp \
-    main.cpp \
-    bjwindow.cpp \
-    qutil.cpp \
-    resources.cpp \
-    scene.cpp \
-    spritesheet.cpp
+    src/widgets/betcontrols.cpp \
+    src/blackjack/blackjack.cpp \
+    src/blackjack/card.cpp \
+    src/blackjack/deck.cpp \
+    src/audio/gameaudio.cpp \
+    src/widgets/gamecontrols.cpp \
+    src/widgets/gameendmessage.cpp \
+    src/widgets/gameinfo.cpp \
+    src/widgets/gamesceneview.cpp \
+    src/blackjack/hand.cpp \
+    src/widgets/handinfo.cpp \
+    src/main.cpp \
+    src/gameui/bjwindow.cpp \
+    src/util/qutil.cpp \
+    src/resources.cpp \
+    src/graphics/scene.cpp \
+    src/graphics/spritesheet.cpp
 
 HEADERS += \
-    betcontrols.h \
-    bjwindow.h \
-    blackjack.h \
-    card.h \
-    deck.h \
-    gameaudio.h \
-    gamecontrols.h \
-    gameendmessage.h \
-    gameinfo.h \
-    gamesceneview.h \
-    hand.h \
-    handinfo.h \
-    qutil.h \
-    resources.h \
-    scene.h \
-    spritesheet.h \
-    types.h
+    src/widgets/betcontrols.h \
+    src/gameui/bjwindow.h \
+    src/blackjack/blackjack.h \
+    src/blackjack/card.h \
+    src/blackjack/deck.h \
+    src/audio/gameaudio.h \
+    src/widgets/gamecontrols.h \
+    src/widgets/gameendmessage.h \
+    src/widgets/gameinfo.h \
+    src/widgets/gamesceneview.h \
+    src/blackjack/hand.h \
+    src/widgets/handinfo.h \
+    src/util/qutil.h \
+    src/util/dialogs.h \
+    src/resources.h \
+    src/graphics/scene.h \
+    src/graphics/spritesheet.h \
+    src/types.h
 
 FORMS += \
-    betcontrols.ui \
-    bjwindow.ui \
-    gamecontrols.ui \
-    gameendmessage.ui \
-    gameinfo.ui \
-    handinfo.ui
+    src/widgets/betcontrols.ui \
+    src/gameui/bjwindow.ui \
+    src/widgets/gamecontrols.ui \
+    src/widgets/gameendmessage.ui \
+    src/widgets/gameinfo.ui \
+    src/widgets/handinfo.ui
 
-TRANSLATIONS += \
-    bj_en_US.ts
 CONFIG += lrelease
 CONFIG += embed_translations
 
