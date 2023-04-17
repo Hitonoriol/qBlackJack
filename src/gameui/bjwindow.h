@@ -4,6 +4,7 @@
 #include "blackjack/blackjack.h"
 
 #include "graphics/scene.h"
+#include "gameconfig.h"
 
 #include <QMainWindow>
 
@@ -28,6 +29,9 @@ public:
     const QString& notify(const QString&);
 
     void resizeEvent(QResizeEvent*) override;
+    void closeEvent(QCloseEvent*) override;
+
+    void changeCardSkin(const QString&);
 
     void doStartGame(int bet);
     void gameStarted();
@@ -41,6 +45,8 @@ private:
     Ui::BJWindow *ui;
     Scene *scene;
 
+    GameConfig config;
+
     std::unique_ptr<BlackJack> blackJack;
     BetControls *betControls;
     GameControls *gameControls;
@@ -52,6 +58,9 @@ private:
         GAME_END_FADE_IN = 200,
         GAME_END_DURATION = GAME_END_FADE_IN + 5000,
         GAME_END_FADE_OUT = 1000;
+
+    void loadSettings();
+    void saveSettings();
 
     void showGameControls(bool show = true);
     void showBetControls();

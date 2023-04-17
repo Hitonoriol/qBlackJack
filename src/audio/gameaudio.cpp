@@ -26,6 +26,16 @@ void GameAudio::playBgMusic()
     bgMusicPlayer->play();
 }
 
+bool GameAudio::isBgMusicPlaying()
+{
+    return bgMusicPlayer->isPlaying();
+}
+
+bool GameAudio::areSoundEffectsEnabled()
+{
+    return soundEffectsEnabled;
+}
+
 void GameAudio::playBetSound()
 {
     playSound(*betSound);

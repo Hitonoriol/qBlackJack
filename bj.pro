@@ -14,6 +14,7 @@ RESOURCES = resources.qrc
 INCLUDEPATH += src
 
 SOURCES += \
+    src/gameui/gameconfig.cpp \
     src/widgets/betcontrols.cpp \
     src/blackjack/blackjack.cpp \
     src/blackjack/card.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
     src/graphics/spritesheet.cpp
 
 HEADERS += \
+    src/gameui/gameconfig.h \
     src/widgets/betcontrols.h \
     src/gameui/bjwindow.h \
     src/blackjack/blackjack.h \

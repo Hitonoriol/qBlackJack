@@ -20,6 +20,7 @@ BJWindow::BJWindow(QWidget *parent)
     : QMainWindow(parent),
     ui(new Ui::BJWindow),
     scene(new Scene),
+    config(*this),
     blackJack(std::make_unique<BlackJack>())
 {
     Resources::load();
@@ -45,7 +46,7 @@ BJWindow::BJWindow(QWidget *parent)
 
     show();
     gameSceneResized();
-    Resources::audio->playBgMusic();
+    loadSettings();
 }
 
 BJWindow::~BJWindow()
@@ -57,6 +58,33 @@ void BJWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
     gameSceneResized();
+}
+
+void BJWindow::closeEvent(QCloseEvent*)
+{
+    saveSettings();
+}
+
+void BJWindow::changeCardSkin(const QString &fileName)
+{
+    bool loaded = false;
+    try {
+        QFile sheetFile(fileName);
+        if (!fileName.isEmpty() && sheetFile.exists()) {
+            Resources::loadCardSheet(fileName);
+            loaded = true;
+        } else
+            Dialog::error("Error", "Couldn't open specified card skin file");
+    } catch (...) {
+        Dialog::error("Error", "An exception has occurred while trying to load the card skin");
+        Resources::resetCardSheet();
+    }
+    scene->update();
+
+    if (loaded)
+        config.customSkinLoaded(fileName);
+    else
+        config.customSkinUnloaded();
 }
 
 void BJWindow::doStartGame(int bet)
@@ -147,6 +175,20 @@ BlackJack &BJWindow::getBlackJack()
     return *blackJack;
 }
 
+void BJWindow::loadSettings()
+{
+    config.load();
+    gameInfo->infoUpdated();
+    betControls->balanceUpdated();
+    ui->toggleMusicAction->setChecked(Resources::audio->isBgMusicPlaying());
+    ui->toggleSoundEffectsAction->setChecked(Resources::audio->areSoundEffectsEnabled());
+}
+
+void BJWindow::saveSettings()
+{
+    config.save();
+}
+
 void BJWindow::showGameControls(bool show)
 {
     notify(show ? "Your turn." : "Place a bet to begin the game.");
@@ -202,23 +244,14 @@ void BJWindow::doChangeCardSkin()
         "./",
         "Image Files (*.png *.jpg *.bmp)"
     );
-    try {
-        QFile sheetFile(fileName);
-        if (!fileName.isEmpty() && sheetFile.exists())
-            Resources::loadCardSheet(fileName);
-        else
-            Dialog::error("Error", "Couldn't open specified card skin file");
-    } catch (...) {
-        Dialog::error("Error", "An exception has occurred while trying to load the card skin");
-        Resources::resetCardSheet();
-    }
-    scene->update();
+    changeCardSkin(fileName);
 }
 
 void BJWindow::doResetSkin()
 {
     Resources::resetCardSheet();
     scene->update();
+    config.customSkinUnloaded();
 }
 
 void BJWindow::doResetGame()

@@ -19,9 +19,9 @@ public:
         Push        // When player and dealer have equivalent hands
     };
 
-private:
     static constexpr int DEFAULT_BALANCE = 100;
 
+private:
     GameState state = GameState::None;
     Deck deck;
 
@@ -54,6 +54,7 @@ public:
     void stand(Action onGameEnd);
 
     int getBalance();
+    void setBalance(int balance);
     int getBet();
 
     GameState getGameState();

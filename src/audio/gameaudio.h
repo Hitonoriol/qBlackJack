@@ -29,8 +29,9 @@ public:
     GameAudio();
 
     void enableSoundEffects(bool enable);
-
     void playBgMusic();
+    bool isBgMusicPlaying();
+    bool areSoundEffectsEnabled();
 
     void playBetSound();
     void playClickSound();

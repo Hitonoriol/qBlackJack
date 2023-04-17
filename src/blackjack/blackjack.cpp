@@ -54,6 +54,11 @@ int BlackJack::getBalance()
     return balance;
 }
 
+void BlackJack::setBalance(int balance)
+{
+    this->balance = balance;
+}
+
 int BlackJack::getBet()
 {
     return bet;
